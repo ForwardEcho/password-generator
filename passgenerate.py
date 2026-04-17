@@ -148,7 +148,6 @@ def main():
         return
 
     if len(sys.argv) == 1:
-        print(banner)
         print("\033[1;36m[+] Entering Interactive Mode\033[0m")
         length = int(input("\033[1;36m[#] Enter password length: \033[0m"))
         number = int(input("\033[1;36m[#] Enter number of passwords to generate: \033[0m"))
@@ -180,6 +179,7 @@ def main():
             print(f"\033[1;32m[+]\033[0m Saved to: \033[1;34m{output}\033[0m")
         except Exception as e:
             print(f"\033[1;31m[!] Error writing file: {e}\033[0m")
+        
         return
 
     for _ in range(args.number):
