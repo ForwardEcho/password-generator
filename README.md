@@ -4,75 +4,90 @@
 ![Type](https://img.shields.io/badge/category-Cybersecurity-red.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-Sebuah alat pembuat password berbasis CLI yang dirancang khusus untuk keperluan **Cybersecurity** dan **Penetration Testing**. Dilengkapi dengan analisis kekuatan password dan estimasi waktu brute-force secara real-time.
+A CLI-based password generation tool designed for **Cybersecurity** and **Penetration Testing**. It features real-time password strength analysis, entropy calculation, and brute-force time estimation.
 
 ---
 
-## ✨ Fitur Utama
+## ✨ Key Features
 
-*   🚀 **Custom Generation**: Kendali penuh atas jumlah huruf, angka, dan simbol.
-*   📊 **Strength Analysis**: Menilai keamanan password berdasarkan kriteria standar industri.
-*   ⏳ **Crack Time Estimation**: Menghitung berapa lama waktu yang dibutuhkan untuk membongkar password menggunakan hardware modern (GPU).
-*   🎨 **Cyberpunk UI**: Antarmuka terminal dengan banner ASCII yang keren dan output berwarna.
-*   📂 **Batch Output**: Simpan hasil generate langsung ke dalam file `.txt` untuk dijadikan wordlist.
+*   🚀 **Interactive Mode**: Run without arguments to be guided through an interactive setup menu.
+*   🔍 **Password Checker**: Audit the strength, entropy, and crack time of any existing password.
+*   📊 **Strength Analysis**: Evaluates password security based on industry-standard criteria.
+*   🔐 **Entropy Calculation**: Measures the mathematical randomness of characters in bits.
+*   ⏳ **Crack Time Estimation**: Estimates the time required to crack the password using modern hardware.
+*   🎨 **Cyberpunk UI**: Sleek terminal interface with an ASCII banner and color-coded output.
+*   📂 **Batch Output**: Save generated passwords directly to a `.txt` file for wordlist creation.
 
 ---
 
-## 🛠️ Instalasi
+## 🛠️ Installation
 
-Pastikan Anda sudah menginstal Python di sistem Anda.
+Make sure you have Python installed on your system.
 
-1. Clone repositori ini:
+1. Clone this repository:
    ```bash
    git clone https://github.com/ForwardEcho/password-generator.git
    ```
-2. Masuk ke direktori project:
+2. Navigate to the project directory:
    ```bash
    cd password-generator
    ```
 
 ---
 
-## 🚀 Cara Penggunaan
+## 🚀 Usage
 
-Gunakan argumen berikut untuk menjalankan script:
+There are three ways to run this script:
 
+### 1. Interactive Mode (Easiest)
+Simply run the script without any arguments:
 ```bash
-python passgenerate.py -l [length] -n [number] -o [output_file] -s [symbol] -d [digit] -a [alphabet]
+python passgenerate.py
 ```
 
-### Argumen:
-| Flag | Nama | Deskripsi |
-|---|---|---|
-| `-l` | `--length` | Total panjang password yang diinginkan. |
-| `-n` | `--number` | Jumlah password yang ingin dihasilkan. |
-| `-o` | `--output` | Nama file hasil output (ex: `wordlist.txt`). |
-| `-s` | `--special` | Jumlah minimal karakter spesial/simbol. |
-| `-d` | `--digits` | Jumlah minimal angka. |
-| `-a` | `--letters` | Jumlah minimal huruf. |
-
-### Contoh:
-Generate **10 password** dengan panjang **16 karakter**, minimal **4 angka** dan **2 simbol**:
+### 2. Generator Mode (CLI)
+Use flags for fast and specific generation:
 ```bash
-python passgenerate.py -l 16 -n 10 -o wordlist.txt -s 2 -d 4 -a 4
+python passgenerate.py -l 16 -n 10 -o pass.txt -s 2 -d 2 -a 12
+```
+
+### 3. Checker Mode (Analysis)
+Use the `-c` flag to audit a specific password:
+```bash
+python passgenerate.py -c your_password_here
 ```
 
 ---
 
-## 📸 Preview Tampilan
-Saat dijalankan, tool ini akan menampilkan analisis seperti ini:
+### Command Line Arguments:
+| Flag | Name | Description |
+|---|---|---|
+| `-l` | `--length` | Total length of the password. |
+| `-n` | `--number` | Number of passwords to generate. |
+| `-o` | `--output` | Output filename. |
+| `-s` | `--special` | Minimum special characters. |
+| `-d` | `--digits` | Minimum digits. |
+| `-a` | `--letters` | Minimum letters. |
+| `-c` | `--check` | Audit a specific password string. |
+| `-i` | `--interactive`| Manually trigger interactive mode. |
+
+---
+
+## 📸 Preview
+When executed, the tool provides a detailed security breakdown:
 ```text
-[#] Sample: 7H!pL0@d3r_X9
+[#] Sample: .[N6`878'*Z9NFM
+[#] Entropy: 91.31 bits
 [#] Strength: Strong
-[#] Crack Time: 1245.22 Centuries
+[#] Crack Time: 97,460,151.84 Centuries
 [+] Successfully generated 10 passwords!
-[+] Saved to: wordlist.txt
+[+] Saved to: password-list.txt
 ```
 
 ---
 
 ## ⚠️ Disclaimer
-Penggunaan tool ini untuk tujuan ilegal adalah dilarang keras. Penulis tidak bertanggung jawab atas penyalahgunaan alat ini. Gunakan untuk keperluan edukasi, riset keamanan, dan pengujian penetrasi yang sah secara hukum.
+Usage of this tool for illegal purposes is strictly prohibited. The author is not responsible for any misuse of this tool. Use it for education, security research, and authorized penetration testing only.
 
 ---
 

@@ -2,6 +2,7 @@ import argparse
 import string
 from random import choice, sample, shuffle
 import math
+import sys
 
 # ASCII Banner
 banner = """
@@ -24,6 +25,7 @@ banner = """
 \033[0m
 """
 
+# Function to generate password using math logic
 def generate_pwd(length, l_count, d_count, s_count):
     all_l = string.ascii_letters
     all_d = string.digits
@@ -48,6 +50,7 @@ def generate_pwd(length, l_count, d_count, s_count):
     shuffle(res)
     return "".join(res)
 
+# Function to calculate password strength
 def password_strength(password):
     score = 0
     if len(password) >= 8:
@@ -70,6 +73,7 @@ def password_strength(password):
     else:
         return "\033[1;32mStrong\033[0m"
 
+# Function to calculate brute force time
 def brute_force_time(password):
     pool = 0
     if any(c.islower() for c in password): pool += 26
@@ -106,6 +110,7 @@ def brute_force_time(password):
     centuries = years / 100
     return f"\033[1;35m{centuries:.2f} Centuries\033[0m"
 
+# Function to calculate password entropy
 def password_entropy(password):
     pool = 0
     if any(c.islower() for c in password): pool += 26
@@ -118,20 +123,65 @@ def password_entropy(password):
     entropy = len(password) * math.log2(pool)
     return entropy
 
+# main function
 def main():
     print(banner)
     
     parser = argparse.ArgumentParser(description="Cybersecurity style Password Generator")
-    parser.add_argument("-l", "--length", type=int, required=True, help="Total length of the password")
-    parser.add_argument("-n", "--number", type=int, required=True, help="Number of passwords to generate")
-    parser.add_argument("-o", "--output", type=str, required=True, help="Output file name")
-    parser.add_argument("-s", "--special", type=int, required=True, help="Minimum special characters")
-    parser.add_argument("-d", "--digits", type=int, required=True, help="Minimum digits")
-    parser.add_argument("-a", "--letters", type=int, required=True, help="Minimum letters")
+    parser.add_argument("-l", "--length", type=int, required=False, help="Total length of the password")
+    parser.add_argument("-n", "--number", type=int, required=False, help="Number of passwords to generate")
+    parser.add_argument("-o", "--output", type=str, required=False, help="Output file name")
+    parser.add_argument("-s", "--special", type=int, required=False, help="Minimum special characters")
+    parser.add_argument("-d", "--digits", type=int, required=False, help="Minimum digits")
+    parser.add_argument("-a", "--letters", type=int, required=False, help="Minimum letters")
+    parser.add_argument("-i", "--interactive", action="store_true", help="Interactive mode")
+    parser.add_argument("-c", "--check", type=str, required=False, help="Check password strength")
 
     args = parser.parse_args()
 
     passwords = []
+
+    if args.check:
+        print("\033[1;36m[#] Password Strength:\033[0m ", password_strength(args.check))
+        print("\033[1;36m[#] Password Entropy:\033[0m ", password_entropy(args.check))
+        print("\033[1;36m[#] Crack Time:\033[0m ", brute_force_time(args.check))
+        return
+
+    if len(sys.argv) == 1:
+        print(banner)
+        print("\033[1;36m[+] Entering Interactive Mode\033[0m")
+        length = int(input("\033[1;36m[#] Enter password length: \033[0m"))
+        number = int(input("\033[1;36m[#] Enter number of passwords to generate: \033[0m"))
+        output = input("\033[1;36m[#] Enter output file name: \033[0m")
+        special = int(input("\033[1;36m[#] Enter minimum special characters: \033[0m"))
+        digits = int(input("\033[1;36m[#] Enter minimum digits: \033[0m"))
+        letters = int(input("\033[1;36m[#] Enter minimum letters: \033[0m"))
+
+        print("\033[1;36m[+] Generating passwords...\033[0m")
+        for _ in range(number):
+            pwd = generate_pwd(length, letters, digits, special)
+            if pwd:
+                passwords.append(pwd)
+            else:
+                print("\033[1;31m[!] Error: Total requested characters exceed total length.\033[0m")
+                return
+
+        try:
+            with open(output, "w") as f:
+                for p in passwords:
+                    f.write(p + "\n")
+            
+            if passwords:
+                print(f"\033[1;36m[#] Sample:\033[0m {passwords[0]}")
+                print(f"\033[1;36m[#] Entropy:\033[0m {password_entropy(passwords[0])}")
+                print(f"\033[1;36m[#] Strength:\033[0m {password_strength(passwords[0])}")
+                print(f"\033[1;36m[#] Crack Time:\033[0m {brute_force_time(passwords[0])}")
+            print(f"\033[1;32m[+]\033[0m Successfully generated {len(passwords)} passwords!")
+            print(f"\033[1;32m[+]\033[0m Saved to: \033[1;34m{output}\033[0m")
+        except Exception as e:
+            print(f"\033[1;31m[!] Error writing file: {e}\033[0m")
+        return
+
     for _ in range(args.number):
         pwd = generate_pwd(args.length, args.letters, args.digits, args.special)
         if pwd:
@@ -154,6 +204,7 @@ def main():
         print(f"\033[1;32m[+]\033[0m Saved to: \033[1;34m{args.output}\033[0m")
     except Exception as e:
         print(f"\033[1;31m[!] Error writing file: {e}\033[0m")
+    
 
 if __name__ == "__main__":
     main()
